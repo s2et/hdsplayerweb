@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Content</title>
+    <link rel="icon" type="image/x-icon" href="/imgs/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="keywords" content="HTML,CSS,XML,JavaScript">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Title -->
+<title>ALTARETO</title>
+<!-- Place favicon.ico in the root directory -->
+<link rel="shortcut icon" type="image/ico" href="imgs/favicon.ico" />
+<!-- Plugin-CSS -->
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- Main-Stylesheets -->
+<link rel="stylesheet" href="style.css">
+<script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    
+
+    <style>
+      
+    </style>
+</head>
+<body>
+    <div>
+    <div class="container bg-transparent" scope="row">
+        <div id="dist" style="color:white"><h1></h1></div>
+    <div class="table table-hover bg-transparent tab-content row text-white" id="dat" type="text" width="100%" height="100%" frameborder="0" scope="column"><h2 style="color:white">Video Content_Links</h2></div>
+        
+		<div scope="column">
+			<input type="text" id="txtLink" placeholder="Enter your Link:" />
+			<button class="btn btn-secondary btn-sm"  onclick="addLinks()">Add</button>
+		
+        </div>
+        <div scope="column">
+            <input type="text" id="rmLink" placeholder="Enter Link Number to remove:" />
+			<button class="btn btn-secondary btn-sm"  onclick="removeLinks()">Remove</button>
+        </div>
+        <div scope="column">
+    <button class="btn btn-secondary btn-sm" onclick="hme()"><h6>Home</h6></button>
+    <button class="btn btn-secondary btn-sm" onclick="history.go()"><h6>Refresh</h6></button>
+    </div>
+      </div>
+    </div>
+<div class="fixed-center">
+<div class="row"><h2 style="color:white" scope="column">ALTA RETO</h2></div>
+<div class="row"><h3 style="color:white" scope="column">DE REKLAMO</h3></div>
+<div class="row"><h3 style="color:white" scope="column"></h3></div>
+<div class="row"><h6 style="color:white" scope="column">Powered By</h6></div>
+<div class="row"><h5 style="color:white" scope="column">S2ECOTECH</h5></div>
+</div>
+ <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>    
+<script>
+  let data0="";
+  let dt="";
+  let u=location.href.split("?");
+  console.log(u);
+  document.getElementById('dist').innerHTML=u[2];
+  let url="https://guc.s2ecotech.com/disps/"+u[2]+"/vlinks.txt";
+  let urll="https://guc.s2ecotech.com/members/"+u[1];
+  async function getdata(url) {
+    const response = await fetch(url);
+    data0 = await response.text();
+    if(data0.length!=0){
+    show(data0);
+    }
+    else{
+        document.getElementById('dat').innerHTML="\n no links";
+    }
+      
+  }
+  urll="https://guc.s2ecotech.com/members/"+u[1];
+  chk();
+  function chk(){
+  let data="";
+  let i=0;
+  //document.getElementById("ds").innerHTML="Welcome"+" "+k1[0]+" to AltaReto";
+  setInterval(async function(){const response = await fetch(urll+"/cooke.txt");
+      data = await response.text();
+      console.log(data);
+      if(data.length!=0 && i<75){
+          console.log(data);
+          i++;
+          
+      }
+      else{
+          window.open("https://guc.s2ecotech.com/members/?#","_self");}},2500);
+  }
+  function WritePhp(pd){
+        //document.getElementByName("data").value = p;
+       $.ajax({
+           type: "POST",
+           url: "/disps/stp.php",
+           data: {'data1':pd,'data2':u[2],'data3':"vlinks.txt"},
+           beforeSend: function(xhr){xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")},
+           success: function(data){ 
+               alert("data saved to vlinks.txt");
+            }
+        });
+        /*set fso = CreateObject("Scripting.FileSystemObject");
+        set s = fso.CreateTextFile("/home/secotech/public_html/guc.s2ecotech.com/test.txt", True);
+        s.writeline(p);
+        s.Close();*/
+      
+  }
+  
+  getdata(url);
+  function show(data){
+      console.log("data "+data);
+      let dt1= "";
+      let dt2= "";
+      dt1=data.split(";");
+      ul = document.createElement('ul');
+      document.getElementById('dat').appendChild(ul);
+      let j=0;
+      dt1.forEach(function(item1){
+          dt=item1.split("##");
+          console.log("dt",dt);
+          if(dt[0]==u[1]){
+              let li = document.createElement('li');
+              ul.appendChild(li);
+              li.innerHTML += j+1+"-"+dt[1];
+              j++;
+          }
+          else{
+              document.getElementById('dat').innerHTML="No Record Found";
+              
+          }
+          
+      });
+  }
+  function WriteFile(k,s){
+       let pd="";
+       let pu="";
+       console.log("k",k);
+       console.log("u[1]",u[1]);
+       console.log("u[2]",u[2]);
+       for(let m=0;m<k.length;m++){
+           pd=pd+u[1]+"##"+k[m];
+           if(m<(k.length-1)){
+               //url.write(k[m]);
+               pd=pd+";";
+               //pu=pu+";";
+               
+           }
+       }
+       pu=u[2]+"@"+k[k.length-1];
+       console.log("pd"+pd);
+       console.log("pu"+pu);
+       window.open("https://guc.s2ecotech.com/members/trans.html"+"?!"+u[1]+"?!"+pu+"?!"+s);
+       WritePhp(pd);
+       //getdata(url);
+       //window.location.reload();
+  }
+  async function addLinks(){
+    const response = await fetch(url);
+    let data2 = await response.text();
+    if(data2.length<1){
+        data2=u[1]+"##"+"https://drive.google.com/uc?export=download&id=1eNphVgApVkndnZjWWkEuJUvZhEoZL8O5";
+    }
+    dt=data2.split(";");
+    const dt1=[];
+    dt.forEach(function(itm){
+        let d= itm.split("##");
+        dt1.push(d[1]);
+    });
+    let input = document.getElementById("txtLink").value;
+    let fileID = input.split("/");
+    console.log(fileID[5]);
+    if(fileID[2]=="drive.google.com"){
+        let x= ("https://drive.google.com/uc?export=download&id="+fileID[5]);
+        console.log(x);
+        dt1.push(x);
+        WriteFile(dt1,"Added");
+    }
+    else{
+        alert("Not a google drive link");
+    }
+	}
+  async function removeLinks(){
+      const response = await fetch(url);
+      let data3 = await response.text();
+      dt=data3.split(";");
+      const dt1=[];
+    dt.forEach(function(itm){
+        let d= itm.split("##");
+        dt1.push(d[1]);
+    });
+      var input = document.getElementById("rmLink").value;
+      console.log(input)
+      dt1.splice(input-1,1)
+      console.log(dt1)
+      WriteFile(dt1,"Removed");
+  
+ }
+ function hme(){
+      window.open("https://guc.s2ecotech.com/members/acct.html"+"?"+u[1],"_self");
+  }
+ /*function update(){
+      $.ajax({
+           type: "POST",
+           url: "/display1/update.php",
+           data: {'data':"update"},
+           beforeSend: function(xhr){xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")},
+           success: function(data){ 
+               alert("saved to update.txt.Update in 30secs");
+            }
+        });
+ }*/
+ 
+  
+  
+</script>
+</body>
+
+</html>

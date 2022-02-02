@@ -1,0 +1,143 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="keywords" content="HTML,CSS,XML,JavaScript">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Title -->
+<title>ALTARETO</title>
+<!-- Place favicon.ico in the root directory -->
+<link rel="shortcut icon" type="image/ico" href="imgs/favicon.ico" />
+<!-- Plugin-CSS -->
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- Main-Stylesheets -->
+<link rel="stylesheet" href="style.css">
+<script src="js/vendor/modernizr-2.8.3.min.js"></script>
+<!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+<style>
+
+</style>
+</head>
+<body onload="his()">
+
+<div>
+<ul class="nav nav-tabs navbar navbar-expand-lg fixed-top">
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="tab" href="#home" onclick="his()">History</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="tab" href="#profile" onclick="dis()">Display</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="tab" href="#hlp" onclick="hlp()">Help</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="tab" href="#cnt" onclick="lgt()">Logout</a>
+  </li>
+</ul>
+<div class="container bg-transparent " style="width:100%;height:100%;position:center;">
+<div id="myTabContent" class="tab-content row text-white">
+  <div class="tab-pane fade show active" id="ds"><h1></h1>
+  </div>
+<div id="myTabContent" class="tab-content row table-dark table-hover">
+  <div class="tab-pane fade show active" id="dn">
+  </div>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed-center">
+<div class="row"><h2 style="color:white" scope="column">ALTA RETO</h2></div>
+<div class="row"><h3 style="color:white" scope="column">DE REKLAMO</h3></div>
+<div class="row"><h3 style="color:white" scope="column"></h3></div>
+<div class="row"><h6 style="color:white" scope="column">Powered By</h6></div>
+<div class="row"><h5 style="color:white" scope="column">S2ECOTECH</h5></div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+  let k=location.href.split("?");
+  let k1=k[1].split("#");
+  url1="https://guc.s2ecotech.com/members/"+k1[0];
+  function chk(){
+  let data="";
+  let i=0;
+  //document.getElementById("ds").innerHTML="Welcome"+" "+k1[0]+" to AltaReto";
+  console.log(k1[0]);
+  setInterval(async function(){const response = await fetch(url1+"/cooke.txt");
+      data = await response.text();
+      console.log(data);
+      if(data.length!=0 && i<75){console.log(data);i++;}
+      else{window.open("https://guc.s2ecotech.com/members/?#","_self");}},2500);
+  }
+  chk();
+  
+  function lgt(){
+      document.getElementById("ds").innerHTML=k1[0]+", Logging Out";
+      document.getElementById("dn").innerHTML="Regards, ALTA RETO";
+      i=100;
+      window.open(url1+"/cooker.php");
+      chk();
+     }
+  async function his(){
+      document.getElementById("ds").innerHTML=k1[0]+", your previous Activities";
+      const response = await fetch(url1+"/hislog.txt");
+      data = await response.text();
+      dt = data.split(";");
+      var i=dt.length;
+      document.getElementById('dn').innerHTML="";
+      ul = document.createElement('ul');
+      document.getElementById('dn').appendChild(ul);
+      let j=0;
+      dt.forEach(function (item) {
+          let li = document.createElement('li');
+          ul.appendChild(li);
+          li.innerHTML += j+1+"-"+item;
+          j++;
+      });
+      chk();
+    }
+  async function dis(){const response = await fetch("https://guc.s2ecotech.com/commons/dispdat.txt");
+      document.getElementById("ds").innerHTML=k1[0]+", Available Displays";
+      data = await response.text();
+      dt = data.split(";");
+      //document.getElementById('ds').innerHTML="";
+      document.getElementById('dn').innerHTML="";
+      //ul = document.createElement('ul');
+      //document.getElementById('ds').appendChild(ul);
+      let j=0;
+      let itm="";
+      dt.forEach(function (item) {
+          //let li = document.createElement('li');
+          //ul.appendChild(li);
+          var btn = document.createElement("button");  //<button> element
+          //li.innerHTML += j+1+"-"+item;
+          btn.className="btn btn-primary btn-sm";
+          btn.setAttribute("style","width:650px;height:50px")
+          itm=item.split("@");
+          console.log("itm[0]",itm[0]);
+          console.log("itm[1]",itm[1]);
+          itm1=itm[1].split("?");
+          var t = document.createTextNode(itm[0]+"\n"+itm1[0]+"\n"+itm1[1]+"\n"+itm1[2]+"\n"+itm1[3]); // Create a text node
+          btn.appendChild(t);
+          btn.onclick = function(){st=t.textContent;
+              window.open("https://guc.s2ecotech.com/members/cntmngmnt.html"+"?"+k1[0]+"?"+st.split("\n")[0]);
+          };
+          document.getElementById("dn").appendChild(btn);
+          j++;
+      });
+      chk();
+  }
+  function hlp() {
+   document.getElementById("ds").innerHTML=k1[0]+", mail us through";
+   document.getElementById("dn").innerHTML="Email:info@s2ecotech.com";
+   chk();
+  }
+</script>
+</body>
+</html>
