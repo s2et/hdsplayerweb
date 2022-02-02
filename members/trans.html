@@ -1,0 +1,74 @@
+<html>
+<head>
+        <title>ALTARETO</title>
+        <link rel="icon" type="image/x-icon" href="/imgs/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="keywords" content="HTML,CSS,XML,JavaScript">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Title -->
+<title>ALTARETO</title>
+<!-- Place favicon.ico in the root directory -->
+<link rel="shortcut icon" type="image/ico" href="imgs/favicon.ico" />
+<!-- Plugin-CSS -->
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- Main-Stylesheets -->
+<link rel="stylesheet" href="style.css">
+<script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    
+    <style>
+      
+    </style>
+</head>
+<body>
+    <div><a>Links Changing</a></div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+    var currentdate="";
+    var datetime="";
+    let u=location.href.split("?!");
+    let datt="";
+    let hislog="";
+    let urll="https://guc.s2ecotech.com/members/"+u[1];
+    console.log(u);
+    timeNow();
+    function timeNow() {
+            currentdate = new Date();
+            datetime = "Last Sync: " + currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+    lnm();        
+    async function lnm(){const response = await fetch(urll+"/hislog.txt");
+    data = await response.text();
+    datt = data.split(";");
+    }
+    if(datt.length<1){
+        hislog = u[2]+" "+u[3]+" on "+datetime;
+    }
+    else{
+        hislog = ";"+u[2]+" "+u[3]+" on "+datetime;
+    }
+    
+    $.ajax({
+           type: "POST",
+           url: "/members/cooke.php",
+           data: {'data1':hislog,'data2':u[1],'data3':"hislog.txt"},
+           beforeSend: function(xhr){xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")},
+           success: function(data){ 
+               alert("data saved to vlinks.txt");
+            }
+        });
+    }
+    window.close();
+        
+    </script>
+</body>
+</html>

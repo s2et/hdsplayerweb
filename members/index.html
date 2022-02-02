@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/c/CodingLabYT-->
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <title> ALTARETO</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+</style>
+</head>
+
+<body>
+  <div class="container">
+    <input type="checkbox" id="flip">
+    <div class="cover">
+      <div class="front">
+        <img src="images/frontImg.jpg" alt="">
+        <div class="text">
+          <span class="text-1">ALTARETO <br> DE REKLAMO</span>
+          <span class="text-2">Let's get connected</span>
+        </div>
+      </div>
+      <div class="back">
+        <img class="backImg" src="images/backImg.jpg" alt="">
+        <div class="text">
+          <span class="text-1">HRV DISPLAYS <br> S2ECOTECH </span>
+          <span class="text-2">Let's get started</span>
+        </div>
+      </div>
+    </div>
+    <div class="forms">
+        <div class="form-content">
+          <div class="login-form">
+            <div class="title">Login</div>
+          <form action="#">
+            <div class="input-boxes">
+              <div class="input-box">
+                <i class="fas fa-envelope"></i>
+                <input type="text" id="lm" placeholder="Enter your registered email" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="lp" placeholder="Enter your password" required>
+              </div>
+              <div class="text"><a href="#" onclick="fgpswd()">Forgot password?</a></div>
+              <div class="button input-box">
+                <input type="submit" value="Submit" onclick="lgn()">
+              </div>
+              <div class="text sign-up-text">Don't have an account? <label for="flip">Create Account now</label></div>
+            </div>
+        </form>
+      </div>
+        <div class="signup-form">
+          <div class="title">Create Account</div>
+        <form action="#">
+            <div class="input-boxes">
+              <div class="input-box">
+                <i class="fas fa-user"></i>
+                <input type="text" id="nam1" placeholder="Enter your first name" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-user"></i>
+                <input type="text" id="nam2" placeholder="Enter your last name" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-flag"></i>
+                <input type="text" id="nam3" placeholder="Enter your country name" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-landmark"></i>
+                <input type="text" id="nam4" placeholder="Enter your state name" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-building"></i>
+                <input type="text" id="nam5" placeholder="Enter your city name" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-envelope"></i>
+                <input type="text" id="ema" placeholder="Enter your email" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="pswd" placeholder="Enter your password" required>
+              </div>
+              <div class="button input-box">
+                <input type="submit" value="Submit" onclick="signup()">
+              </div>
+              <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></div>
+            </div>
+      </form>
+    </div>
+    </div>
+    </div>
+  </div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+  let vc="";
+
+  function signup(){
+    let nam1 = document.getElementById("nam1").value;
+    let nam2 = document.getElementById("nam2").value;
+    let nam3 = document.getElementById("nam3").value;
+    let nam4 = document.getElementById("nam4").value;
+    let nam5 = document.getElementById("nam5").value;
+    let ema = document.getElementById("ema").value;
+    let pswd = document.getElementById("pswd").value;
+    let p = nam1+"\\"+nam2+"\\"+nam3+"\\"+nam4+"\\"+nam5+";"+ema+";"+pswd;
+     $.ajax({
+           type: "POST",
+           url: "/members/reg.php",
+           data: {'data1':p,'data2':ema},
+           beforeSend: function(xhr){xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")},
+           success: function(data){ 
+               alert(nam1+" "+"account "+ema+"/"+"registered");
+               alert("Login Now");
+            }
+        });
+    }
+  function lgn(){
+    let data="";
+    let dt="";
+    let lm = document.getElementById("lm").value;
+    let ps = document.getElementById("lp").value;
+    url="https://guc.s2ecotech.com/members/"+lm+"/reg.txt";
+    get(url);
+    async function get(url){
+    const response = await fetch(url);
+    data = await response.text();
+    dt=data.split(";");
+    cook="https://guc.s2ecotech.com/members/"+lm+"/cooke.txt";
+    console.log("cook",cook);
+    if(dt[1]==lm){
+        if(dt[2]==ps){
+            console.log("entered correct");
+            window.open("https://guc.s2ecotech.com/members/"+lm+"/cooker.php");
+            setTimeout(cooke(lm),5000);
+        }
+        else{
+            console.log("password incorrect");
+            alert("Password Incorrect");
+        }
+    }
+    else{
+        console.log("incorrect credentials");
+        alert("Incorrect Credentials");
+    }
+  }
+  }
+  function cooke(lm){
+      console.log(lm);
+      $.ajax({
+          type: "POST",
+          url: "/members/cooke.php",
+          data: {'data1':lm,'data2':lm,'data3':'cooke.txt'},
+          beforeSend: function(xhr){xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded")},
+          success: function(data2){alert("logging in "+data2);window.open("https://guc.s2ecotech.com/members/acct.html"+"?"+lm,"_self");}
+          
+      });
+  }
+  
+  function fgpswd(){
+      let lm1 = document.getElementById("lm").value;
+      if(lm1.length<1){
+          alert("Fill the email column and then press forgot password");
+      }
+      else{
+          alert("Send Password request through your registered email");
+          window.open("mailto:info@s2ecotech.com?subject=FORGOT PASSWORD&body=<b> my registered email is: "+lm1);
+      }
+  }
+ 
+</script>
+</body>
+</html>
