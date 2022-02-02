@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>HDS Player::Display1</title>
+    <link rel="icon" type="image/x-icon" href="/imgs/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+   <style>
+        .container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+/* Bottom left text */
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+/* Top left text */
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
+/* Top right text */
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
+
+/* Bottom right text */
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>
+</head>
+
+<body style="background-image:url('imgs/arw.jpg');">
+    <!--<div>
+        <img id="dat" width="1260" height="700" frameborder='0' align="center">
+    </div>-->
+    <div class="container">
+        <video id="vdat" width="1260" height="720" align="center" type='video/webm' controls="controls" autoplay="1" onended="onEnded();">
+        </video>
+        <div class="bottom-left" style="background:black;" id="pblsh"><h2></h2></div>
+    </div>
+    
+
+<script>
+  let data="";
+  let data1="";
+  let dt="";
+  let dt1="";
+  let f=location.href.split("?!");
+  let f1=f[0].split("/");
+  async function getdata(url1) {
+      
+    const response = await fetch(url1);
+    data = await response.text();
+    show(data);
+      
+  }
+  getdata("https://guc.s2ecotech.com/disps/"+f1[4]+"/Links.txt");
+  function show(data,){
+      console.log("data"+data);
+      dt=data.split(";");
+      data1=f[1].split(";");
+      console.log("data1[0]",data1[0]);
+      document.getElementById("pblsh").innerHTML="Published By: "+f[2];
+      var vid = document.getElementById("vdat");
+      vid.src=data1[0];
+      vid.autoplay= true;
+  }
+  function onEnded(){
+      var i=dt.length;
+      var n=parseInt(data1[1],10);
+      var m=parseInt(data1[2],10);
+      console.log("n",n)
+      if(i>n){dt1=dt[n].split("##");p=dt1[1]+";"+(n)+";"+(m+1);}else{n=0;dt1=dt[n].split("##");p=dt1[1]+";"+(n)+";"+(m+1);}
+      console.log(p)
+      setTimeout(function(){window.open("index0.html"+"?!"+p+"?!"+dt1[0], "_self");},1500);
+  }
+  
+  
+  
+</script>
+</body>
+</html>

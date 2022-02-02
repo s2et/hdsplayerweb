@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>HDS Player::Display1</title>
+    <link rel="icon" type="image/x-icon" href="/imgs/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+</head>
+
+<body style="background-image:url('imgs/arw.jpg');">
+    <div>
+        <img src="imgs/arw.jpg" width="1260" height="700" frameborder='0' align="center">
+    </div>
+    
+
+<script>
+  let data="";
+  let data1="";
+  let dt="";
+  let dt1="";
+  let m=location.href.split("/")
+  console.log(m);
+  async function getdata(url1) {
+      
+    const response = await fetch(url1);
+    data = await response.text();
+    show(data);
+      
+  }
+  getdata("https://guc.s2ecotech.com/disps/"+m[4]+"/Links.txt");
+  function show(data){
+      console.log("data"+data);
+      dt=data.split(";");
+      var i=dt.length;
+      dt1=dt[0].split("##");
+      p=dt1[1]+";"+0+";"+0;
+      setTimeout(function(){window.open("index0.html"+"?!"+p+"?!"+dt1[0], "_self");},2000);
+      
+  }
+  
+</script>
+</body>
+</html>
